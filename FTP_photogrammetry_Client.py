@@ -137,7 +137,7 @@ class FTP_photogrammetery_Client( object ):
             if( status == "EOT" ):                                      #   If end of transmission is indicated
                 print( "Disconnectiong MQTT" ) ,                        #       [INFO] ...
                 self.client.publish( self.MQTT_topics[ "status" ],      #       Send EOT to inform server to
-                                     "EOT", qos=1, retain=False  )      #       ...shuwtdown MQTT client as
+                                     "EOT_C", qos=1, retain=False  )      #       ...shuwtdown MQTT client as
                 self.loop = False                                       #       Set loop flag to FALSE
                 sleep( 0.10 )                                           #       Allow time for state of flag to change
                 self.client.disconnect()                                #       Disconnect MQTT client
@@ -204,23 +204,24 @@ class FTP_photogrammetery_Client( object ):
         self.ftp = FTP( self.FTP_server_ip )                            # Connect to host using default port
         self.ftp.login( FTP_USER, FTP_PASS )                            # Login as a known user (NOT anonymous user)
 
-        self.ftp.cwd( "/home/pi/FTP/" )                                 # Change current working directory to FTP directory
+##        self.ftp.cwd( "/home/pi/FTP/" )                                 # Change current working directory to FTP directory (Raspbian)
+        self.ftp.cwd( "./Pictures/" )                                   # Change current working directory to FTP directory (DietPi)
 ##        self.ftp.retrlines( "LIST" )                                    # List contents of FTP directory (make sure things are working)
 
         while( self.loop ):                                             # While we are still receiving data (images)
             sleep( 0.1 )                                                #   Stay in loop to waste time
 
-##        print( "Running VisualSFM" ) ,                                  # [INFO] ...
-##        p = Popen( [r".\main.bat"] )                                    # Call batch file with VisualSFM commands
-##        stdout, stderr = p.communicate()                                # ...
-##        print( "...DONE!" )                                             # {INFO] ...
+        print( "Running VisualSFM" ) ,                                  # [INFO] ...
+        p = Popen( [r".\main.bat"] )                                    # Call batch file with VisualSFM commands
+        stdout, stderr = p.communicate()                                # ...
+        print( "...DONE!" )                                             # {INFO] ...
         
 # ************************************************************************
 # ===========================> SETUP  PROGRAM <===========================
 # ************************************************************************      
 
 MQTT_IP_ADDRESS     = "192.168.42.1"                                    # IP address for MQTT broker
-FTP_USER, FTP_PASS  = "pi", "raspberry"                                 # FTP login credentials
-##FTP_USER, FTP_PASS  = "root", "dietpi"                                  # FTP login credentials
+##FTP_USER, FTP_PASS  = "pi", "raspberry"                                 # FTP login credentials (Raspbian)
+FTP_USER, FTP_PASS  = "dietpi", "dietpi"                                # FTP login credentials (DietPi)
 
 prog = FTP_photogrammetery_Client( MQTT_IP_ADDRESS, FTP_USER, FTP_PASS )# Start program

@@ -188,8 +188,9 @@ class FTP_photogrammetery_Server( object ):
         '''
 
         img_name = "image{}.jpg".format( img_num )                      # Construct image name
-        img_path = "/home/pi/FTP/{}".format( img_name )                 # Define image's path ( FTP folder )
-            
+##        img_path = "/home/pi/FTP/{}".format( img_name )                 # Define image's path ( FTP folder on Raspbian )
+        img_path = "/mnt/dietpi_userdata/Pictures{}".format( img_name ) # Define image's path ( FTP folder on DietPi )
+        
         print( "Sending {}".format(img_name) ) ,                        # [INFO] ...
         
         with PiCamera() as cam:                                         # Capture image
@@ -225,7 +226,7 @@ class FTP_photogrammetery_Server( object ):
             self.take_image( i )                                        #   ...
             
             timer = time()                                              #   Timer to waste time in order to capture at required interval
-            while( time() - timer < self.imgs_interval ): pass          #
+            while( time() - timer < self.imgs_interval ): pass          #   ...
             
         print( "\nClearing retained messages prior to exit" ) ,         # [INFO] ...
         for _, topic in self.MQTT_topics.iteritems():                   # Clear ALL retianed messages in all the sub-topics within
