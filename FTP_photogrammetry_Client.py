@@ -137,7 +137,7 @@ class FTP_photogrammetery_Client( object ):
             if( status == "EOT" ):                                      #   If end of transmission is indicated
                 print( "Disconnectiong MQTT" ) ,                        #       [INFO] ...
                 self.client.publish( self.MQTT_topics[ "status" ],      #       Send EOT to inform server to
-                                     "EOT_C", qos=1, retain=False  )      #       ...shuwtdown MQTT client as
+                                     "EOT", qos=1, retain=False  )      #       ...shuwtdown MQTT client as
                 self.loop = False                                       #       Set loop flag to FALSE
                 sleep( 0.10 )                                           #       Allow time for state of flag to change
                 self.client.disconnect()                                #       Disconnect MQTT client
