@@ -189,7 +189,7 @@ class FTP_photogrammetery_Server( object ):
 
         img_name = "image{}.jpg".format( img_num )                      # Construct image name
 ##        img_path = "/home/pi/FTP/{}".format( img_name )                 # Define image's path ( FTP folder on Raspbian )
-        img_path = "/mnt/dietpi_userdata/Pictures{}".format( img_name ) # Define image's path ( FTP folder on DietPi )
+        img_path = "/mnt/dietpi_userdata/Pictures/{}".format( img_name )# Define image's path ( FTP folder on DietPi )
         
         print( "Sending {}".format(img_name) ) ,                        # [INFO] ...
         
